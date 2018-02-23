@@ -26,85 +26,17 @@ import org.apache.lucene.index.IndexableFieldType;
 import es.uam.eps.bmi.search.index.Index;
 
 public class LuceneIndex implements Index {
-	
-	private final String pathValue = "Path";
-	private final String contentValue = "Content";
-	private final Document document = new Document();
-	private final TextField path;
-	
-	public LuceneIndex(File file) throws IOException{
-		
-		this.path = new TextField(this.pathValue, file.getCanonicalPath(), Field.Store.YES);
-		this.document.add(this.path);
-		
-		if (file.isDirectory()) {
-			File dir = new File(file.getCanonicalPath());
-			File[] directoryListing = dir.listFiles();
-			if (directoryListing != null) {
-				for (File child : directoryListing) {
-					for(TextField field : getFieldsFromFile(child)) {
-						this.document.add(field);
-					}
-				}
-			}
-		}
-		
-		else {
-			for(TextField field : getFieldsFromFile(file)) {
-				this.document.add(field);
-			}
-		}
+
+	@Override
+	public String getAllTerms() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public LuceneIndex(ZipFile zip) throws IOException {
-		
-		this.path = new TextField(this.pathValue, zip.getName(), Field.Store.YES);
-		this.document.add(this.path);
-		
-		Enumeration<? extends ZipEntry> entries = zip.entries();
 
-	    while(entries.hasMoreElements()){
-	        ZipEntry entry = entries.nextElement();
-	        InputStream stream = zip.getInputStream(entry);
-	        
-	        StringBuilder out = new StringBuilder();
-	        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-	        String line;
-	        try {
-	            while ((line = reader.readLine()) != null) {
-	                out.append(line);
-	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-
-	        File file = new File("");
-	        Writer writer = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-	        writer.write(out.toString());
-	        writer.close();
-
-	        for(TextField field : getFieldsFromFile(file)) {
-				this.document.add(field);
-			}
-			stream.close();
-	    }
-	    
-	}
-	
-	public ArrayList<TextField> getFieldsFromFile(File file) throws IOException {
-		
-		ArrayList<TextField> fields = new ArrayList<TextField>();
-		FileReader fileReader = new FileReader(file);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		StringBuffer stringBuffer = new StringBuffer();
-		String line;
-		while ((line = bufferedReader.readLine()) != null) {
-			stringBuffer.append(line);
-			fields.add(new TextField(this.contentValue, line, Field.Store.YES));
-		}
-		fileReader.close();
-		
-		return fields;
+	@Override
+	public int getTotalFreq() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
