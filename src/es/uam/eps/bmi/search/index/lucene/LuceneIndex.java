@@ -3,6 +3,7 @@ package es.uam.eps.bmi.search.index.lucene;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,11 +36,24 @@ public class LuceneIndex implements Index {
 		
 		this.path = new TextField(this.pathValue, file.getCanonicalPath(), Field.Store.YES);
 		this.document.add(this.path);
-
-		for(TextField field : getFieldsFromFile(file)) {
-			this.document.add(field);
+		
+		if (file.isDirectory()) {
+			File dir = new File(file.getCanonicalPath());
+			File[] directoryListing = dir.listFiles();
+			if (directoryListing != null) {
+				for (File child : directoryListing) {
+					for(TextField field : getFieldsFromFile(child)) {
+						this.document.add(field);
+					}
+				}
+			}
 		}
-
+		
+		else {
+			for(TextField field : getFieldsFromFile(file)) {
+				this.document.add(field);
+			}
+		}
 	}
 	
 	public LuceneIndex(ZipFile zip) throws IOException {
