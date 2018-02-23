@@ -21,6 +21,10 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 import es.uam.eps.bmi.search.index.IndexBuilder;
 
@@ -115,7 +119,8 @@ public class LuceneBuilder implements IndexBuilder {
 	@Override
 	public void build(String collectionPath, String indexPath) throws IOException {
 		// TODO Auto-generated method stub
-		
+		Directory indexDirectory = FSDirectory.open(new File(indexPath));
+		IndexWriter index = new IndexWriter (indexDirectory, new IndexWriterConfig ())
 	}
 
 
