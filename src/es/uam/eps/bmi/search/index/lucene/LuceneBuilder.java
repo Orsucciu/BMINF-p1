@@ -12,6 +12,7 @@ import java.io.Writer;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
@@ -119,8 +120,11 @@ public class LuceneBuilder implements IndexBuilder {
 	@Override
 	public void build(String collectionPath, String indexPath) throws IOException {
 		// TODO Auto-generated method stub
-		Directory indexDirectory = FSDirectory.open(new File(indexPath));
-		IndexWriter index = new IndexWriter (indexDirectory, new IndexWriterConfig ())
+		Directory indexDirectory = FSDirectory.open(Paths.get(indexPath));
+		IndexWriter index = new IndexWriter (indexDirectory, new IndexWriterConfig ());
+		File file = new File (collectionPath);
+		Document doc = getDocument (file);
+		index.addDocument(doc);
 	}
 
 
