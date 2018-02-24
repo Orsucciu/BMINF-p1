@@ -67,7 +67,7 @@ public class LuceneIndex implements Index {
 				
 				for (String field : fields) {
 		            Terms currentTerms = fields.terms(field);
-		            TermsEnum termsEnum = (TermsEnum) terms.iterator();
+		            TermsEnum termsEnum = currentTerms.iterator();
 		            while (termsEnum.next() != null) {
 		            	if(terms.contains(termsEnum.term().toString()) == false) {
 		            		terms.add(termsEnum.term().toString()); //this may be wrong
@@ -83,9 +83,38 @@ public class LuceneIndex implements Index {
 	}
 
 	@Override
-	public int getTotalFreq() {
+	/* 
+	 * @Param : a String (represents a term)
+	 * @Return : int (represents the number of time the term appeared over all the indexes)
+	 * */
+	public int getTotalFreq(String term) {
+		int count = 0;
+		
+		for(IndexReader reader : this.indexReaders) {
+			try {
+				Fields fields = MultiFields.getFields(reader);
+				
+				for (String field : fields) {
+		            Terms currentTerms = fields.terms(field);
+		            TermsEnum termsEnum = currentTerms.iterator();
+		            while (termsEnum.next() != null) {
+		            	if(termsEnum.term().toString() == term) {
+		            		count++;
+		            	}
+		            }
+		        }
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return count;
+	}
+
+	@Override
+	public Iterable<String> getDocVector(int docID) {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
 }

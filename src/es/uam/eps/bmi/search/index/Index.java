@@ -11,5 +11,7 @@ public interface Index {
 	
 	public Collection<String> getAllTerms();
 	
-	public int getTotalFreq();
+	public int getTotalFreq(String term);
+	
+	public Iterable<String> getDocVector(int docID);
 }
