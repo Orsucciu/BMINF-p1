@@ -131,12 +131,14 @@ public class LuceneIndex implements Index {
 	}
 
 	@Override
+	//get the path of a doc
 	public String getDocPath(int docID) {
 		
 		return this.indexReader.document(docId).get("path");
 	}
 
 	@Override
+	//get the frequency of a term
 	public long getTermFreq(String word, int docID) {
 		
 		LuceneFreqVector fvector = new LuceneFreqVector(this.indexReader.getTermVector(docID, "content"));
@@ -146,6 +148,7 @@ public class LuceneIndex implements Index {
 	}
 
 	@Override
+	//get the number of docs containing this term
 	public int getDocFreq(String word) {
 
 		Term term = new Term("content", word);
