@@ -15,9 +15,12 @@ import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldType;
@@ -32,6 +35,8 @@ import es.uam.eps.bmi.search.index.IndexBuilder;
 public class LuceneBuilder implements IndexBuilder {
 	
 	// la méthode qui renvoie les fields d'une file
+	//@Return : Field objects
+	//@Param : File object
 	public ArrayList<TextField> getFieldsFromFile(File file) throws IOException {
 		
 		ArrayList<TextField> fields = new ArrayList<TextField>();
@@ -87,7 +92,7 @@ public class LuceneBuilder implements IndexBuilder {
 	    
 	}
 	
-	// celle ci renvoie le document à partir d'une file, que ce soit un fichier ou une file
+	// celle ci renvoie le document à partir d'une file, que ce soit un fichier ou une file <- ??????
 	public Document getDocument (File file) throws IOException{
 		
 		Document doc = new Document ();
@@ -118,14 +123,22 @@ public class LuceneBuilder implements IndexBuilder {
 	}
 	
 	@Override
+	/*
+	 * @Return : void. 
+	 * @Param : A path (origin of the files/data to parse) (String), A path (location where the indexWriter will create the files)(String)
+	 * 
+	 * This will take files, analyze them, and write them as Indexes on the disk
+	 * */
 	public void build(String collectionPath, String indexPath) throws IOException {
-		// TODO Auto-generated method stub
+
 		Directory indexDirectory = FSDirectory.open(Paths.get(indexPath));
-		IndexWriter index = new IndexWriter (indexDirectory, new IndexWriterConfig ());
+		
+		IndexWriter index = new IndexWriter (indexDirectory, new IndexWriterConfig ()); //analyzer is included in IndexWriterConfig
+		
 		File file = new File (collectionPath);
 		Document doc = getDocument (file);
 		index.addDocument(doc);
+		
+		index.close();
 	}
-
-
 }
