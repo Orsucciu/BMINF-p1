@@ -19,4 +19,8 @@ public interface Index {
 	public FreqVector getDocVector(int docID);
 
 	public String getDocPath(int docID);
+
+	public String getTermFreq(String word, int docID);
+
+	public String getDocFreq(String word);
 }

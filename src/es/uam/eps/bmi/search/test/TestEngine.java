@@ -63,7 +63,7 @@ public class TestEngine {
         System.out.println("\n  Most frequent terms:");
         for (String term : terms.subList(0, 5))
             System.out.println("\t" + term + "\t" + index.getTotalFreq(term));
-        
+
         int docID = 0;
         FreqVector vector = index.getDocVector(docID);
         int initialTerm = (int) vector.size() / 2, nTerms = 5;
@@ -92,10 +92,11 @@ public class TestEngine {
             System.out.println("\t" + new TextResultDocRenderer(result));
         System.out.println();
     }
-
+    
     static void clear (String indexPath) throws IOException {
         File dir = new File(indexPath);
         if (!dir.exists()) Files.createDirectories(Paths.get(indexPath));
         for (File f : dir.listFiles()) if (f.isFile()) f.delete();
     }
+    
 }

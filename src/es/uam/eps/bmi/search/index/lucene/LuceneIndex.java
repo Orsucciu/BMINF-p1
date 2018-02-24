@@ -46,7 +46,8 @@ import es.uam.eps.bmi.search.index.freq.FreqVector;
 import es.uam.eps.bmi.search.index.freq.TermFreq;
 
 public class LuceneIndex implements Index {
-	private ArrayList<IndexReader> indexReaders = new ArrayList<IndexReader>();
+	//private ArrayList<IndexReader> indexReaders = new ArrayList<IndexReader>();
+	private IndexReader indexReader;
 	
 	/*
 	 * @Param : String representing the path to a folder with indexes files 
@@ -55,7 +56,8 @@ public class LuceneIndex implements Index {
 	 */
 	public LuceneIndex(String indexPath) throws IOException {
 		
-		IndexReader indexreader = DirectoryReader.open(FSDirectory.open(FileSystems.getDefault().getPath(indexPath))); //read from disk
+		this.indexreader = DirectoryReader.open(FSDirectory.open(FileSystems.getDefault().getPath(indexPath))); //read from disk
+		//this.indexReaders.add(indexReader);
 	}
 	
 	@Override
@@ -68,9 +70,9 @@ public class LuceneIndex implements Index {
 	public Collection<String> getAllTerms() {
 		ArrayList<String> terms = new ArrayList<String>();
 		
-		for(IndexReader reader : this.indexReaders) {
+		//for(IndexReader reader : this.indexReaders) {
 			try {
-				Fields fields = MultiFields.getFields(reader);
+				Fields fields = MultiFields.getFields(this.indexReader);
 				
 				for (String field : fields) {
 		            Terms currentTerms = fields.terms(field);
@@ -84,7 +86,7 @@ public class LuceneIndex implements Index {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		//}
 		
 		return terms;
 	}
@@ -97,9 +99,9 @@ public class LuceneIndex implements Index {
 	public int getTotalFreq(String term) {
 		int count = 0;
 		
-		for(IndexReader reader : this.indexReaders) {
+		//for(IndexReader reader : this.indexReaders) {
 			try {
-				Fields fields = MultiFields.getFields(reader);
+				Fields fields = MultiFields.getFields(this.indexReader);
 				
 				for (String field : fields) {
 		            Terms currentTerms = fields.terms(field);
@@ -113,21 +115,42 @@ public class LuceneIndex implements Index {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		//}
 		
 		return count;
 	}
 
 	@Override
 	public FreqVector getDocVector(int docID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		FreqVector freq;
+		Terms terms = this.indexReader.getTermVector(docID, "content");
+		freq = new LuceneFreqVector(terms);
+		
+		return freq;
 	}
 
 	@Override
 	public String getDocPath(int docID) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.indexReader.document(docId).get("path");
+	}
+
+	@Override
+	public long getTermFreq(String word, int docID) {
+		
+		LuceneFreqVector fvector = new LuceneFreqVector(this.indexReader.getTermVector(docID, "content"));
+		LuceneFreqVectorIterator iterator = (LuceneFreqVectorIterator) fvector.iterator();
+		
+		return iterator.getFreq(word);
+	}
+
+	@Override
+	public int getDocFreq(String word) {
+
+		Term term = new Term("content", word);
+
+		return this.indexReader.docFreq(term);
 	}
 
 }
