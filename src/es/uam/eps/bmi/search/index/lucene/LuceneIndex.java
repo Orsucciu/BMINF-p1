@@ -42,12 +42,19 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.SimpleFSDirectory;
 
 import es.uam.eps.bmi.search.index.Index;
+import es.uam.eps.bmi.search.index.freq.FreqVector;
+import es.uam.eps.bmi.search.index.freq.TermFreq;
 
 public class LuceneIndex implements Index {
 	private ArrayList<IndexReader> indexReaders = new ArrayList<IndexReader>();
-
+	
+	/*
+	 * @Param : String representing the path to a folder with indexes files 
+	 * 
+	 * Constructor of this class : need to iterate through the indexes from the folder given as param
+	 */
 	public LuceneIndex(String indexPath) throws IOException {
-
+		
 		IndexReader indexreader = DirectoryReader.open(FSDirectory.open(FileSystems.getDefault().getPath(indexPath))); //read from disk
 	}
 	
@@ -112,7 +119,13 @@ public class LuceneIndex implements Index {
 	}
 
 	@Override
-	public Iterable<String> getDocVector(int docID) {
+	public FreqVector getDocVector(int docID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getDocPath(int docID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
