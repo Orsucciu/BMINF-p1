@@ -155,5 +155,9 @@ public class LuceneIndex implements Index {
 
 		return this.indexReader.docFreq(term);
 	}
+	
+	public IndexReader getIndexReader () {
+		return this.indexReader;
+	}
 
 }
