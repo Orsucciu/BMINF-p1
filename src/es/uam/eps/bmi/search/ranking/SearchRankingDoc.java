@@ -1,6 +1,6 @@
 package es.uam.eps.bmi.search.ranking;
 
-public class SearchRankingDoc implements Comparable<T> {
+public class SearchRankingDoc implements Comparable<SearchRankingDoc> {
 	
 	private ScoreDoc scoredoc;
 	private String path;
