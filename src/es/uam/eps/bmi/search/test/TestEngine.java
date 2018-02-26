@@ -45,10 +45,13 @@ public class TestEngine {
         IndexBuilder builder = new LuceneBuilder();
         builder.build(collectionPath, indexPath);
         
+        System.out.println("creaci�n ok");
         // Pruebas de inspección del índice
         
         Index index = new LuceneIndex(indexPath);
+        System.out.println("luceneindex creado");
         List<String> terms = new ArrayList<String>(index.getAllTerms());
+        System.out.println("terms all got");
         Collections.sort(terms, new Comparator<String>() {
             public int compare(String t1, String t2) {
                 try {

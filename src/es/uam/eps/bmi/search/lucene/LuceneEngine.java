@@ -16,19 +16,19 @@ import es.uam.eps.bmi.search.ranking.lucene.LuceneRanking;
 
 public class LuceneEngine extends AbstractEngine{
 	
-	private LuceneIndex lucIndex;
-	private IndexSearcher indexSearcher;
+	private LuceneIndex index;
+	private IndexSearcher searcher;
 
 	public LuceneEngine(String indexPath) throws IOException {
 		super(new LuceneIndex(indexPath));
 	}
 
 	@Override
-	public SearchRanking search(String query, int cutoff) throws IOException {
+	public SearchRanking search(String petition, int quantity) throws IOException {
 		
 		BooleanQuery.Builder builder = new BooleanQuery.Builder();
 
-		String[] words = query.split(" ");
+		String[] words = petition.split(" ");
 
 		for (String s : words) {
 			TermQuery tq = new TermQuery(new Term("content", s));
@@ -36,16 +36,16 @@ public class LuceneEngine extends AbstractEngine{
 		}
 
 		BooleanQuery pQuery = builder.build();
-		TopDocs top = this.indexSearcher.search(pQuery, cutoff);
+		TopDocs top = this.searcher.search(pQuery, quantity);
 
 		return new LuceneRanking((LuceneIndex) index, top.scoreDocs);
 	}
 
 	public void loadIndex(String path) throws IOException {
 
-		this.index = new LuceneIndex(path);
+		index = new LuceneIndex(path);
 
-		if (this.index != null && ((IndexSearcher) this.index).getIndexReader() != null)
-			this.indexSearcher = new IndexSearcher(((IndexSearcher) this.index).getIndexReader());
+		if (index != null && index.getIndexReader() != null)
+			searcher = new IndexSearcher (this.index.getIndexReader());
 	}
 }

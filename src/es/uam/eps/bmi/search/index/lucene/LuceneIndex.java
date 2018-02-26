@@ -1,50 +1,19 @@
 package es.uam.eps.bmi.search.index.lucene;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.Fields;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexableFieldType;
 import org.apache.lucene.index.MultiFields;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.store.SimpleFSDirectory;
-
 import es.uam.eps.bmi.search.index.Index;
 import es.uam.eps.bmi.search.index.freq.FreqVector;
-import es.uam.eps.bmi.search.index.freq.TermFreq;
 import es.uam.eps.bmi.search.index.freq.lucene.LuceneFreqVector;
 import es.uam.eps.bmi.search.index.freq.lucene.LuceneFreqVectorIterator;
 
@@ -76,13 +45,16 @@ public class LuceneIndex implements Index {
 		//for(IndexReader reader : this.indexReaders) {
 			try {
 				Fields fields = MultiFields.getFields(this.indexReader);
-				
+				int i = 0;
 				for (String field : fields) {
+					System.out.println(i++);
 		            Terms currentTerms = fields.terms(field);
 		            TermsEnum termsEnum = currentTerms.iterator();
+		            int j = 0;
 		            while (termsEnum.next() != null) {
+		            	System.out.println(j++);
 		            	if(terms.contains(termsEnum.term().toString()) == false) {
-		            		terms.add(termsEnum.term().toString()); //this may be wrong
+		            		terms.add(termsEnum.term().utf8ToString()); //this may be wrong
 		            	}
 		            }
 		        }

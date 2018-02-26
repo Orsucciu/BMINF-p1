@@ -2,11 +2,11 @@ package es.uam.eps.bmi.search.ranking.impl;
 
 public class ImplRanked implements Comparable<ImplRanked>{
 	private int id;
-	private float score;
+	private double count;
 	
-	public ImplRanked (int i, float s) {
+	public ImplRanked (int i, double c) {
 		id = i;
-		score = s;
+		count = c;
 	}
 	
 	public int getId () {
@@ -17,16 +17,16 @@ public class ImplRanked implements Comparable<ImplRanked>{
 		id = i;
 	}
 	
-	public float getScore () {
-		return score;
+	public double getCount () {
+		return count;
 	}
 	
-	public void setScore (float s) {
-		score = s;
+	public void setCount(double c) {
+		count = c;
 	}
 	
 	@Override
 	public int compareTo (ImplRanked o) {
-		return Float.compare(o.score, score);
+		return Double.compare(o.count, count);
 	}
 }

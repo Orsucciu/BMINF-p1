@@ -9,13 +9,12 @@ public class ImplRankingDoc extends SearchRankingDoc {
 	private ImplRanked doc;
 	
 	public ImplRankingDoc (Index index, ImplRanked doc) {
-		
 		this.index = index;
 		this.doc = doc;
 	}
 	
-	public double getScore () {
-		return this.doc.getScore();
+	public double getCount () {
+		return this.doc.getCount();
 	}
 	
 	public String getPath () {
