@@ -11,7 +11,7 @@ public class ImplRanking implements SearchRanking {
 	
 	private ImplRankingIterator iterator;
 	
-	public ImplRanking (LuceneIndex index, List<ImplRankedDoc> list) {
+	public ImplRanking (LuceneIndex index, List<ImplRanked> list) {
 		iterator = new ImplRankingIterator (index, list);
 	}
 	

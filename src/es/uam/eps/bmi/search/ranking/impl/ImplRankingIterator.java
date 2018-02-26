@@ -8,18 +8,18 @@ import es.uam.eps.bmi.search.ranking.SearchRankingIterator;
 
 public class ImplRankingIterator implements SearchRankingIterator {
 
-	ImplRankedDoc results[];
+	ImplRanked results[];
 	Index index;
 	int n = 0;
 
-	public ImplRankingIterator(Index index, List<ImplRankedDoc> list) {
+	public ImplRankingIterator(Index index, List<ImplRanked> list) {
 		this.index = index;
-		this.results = list.toArray(new ImplRankedDoc[list.size()]);
+		this.results = list.toArray(new ImplRanked[list.size()]);
 	}
 
 	public ImplRankingIterator() {
 		this.index = null;
-		this.results = new ImplRankedDoc[0];
+		this.results = new ImplRanked[0];
 	}
 
 	@Override

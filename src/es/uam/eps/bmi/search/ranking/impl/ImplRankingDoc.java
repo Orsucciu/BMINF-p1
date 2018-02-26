@@ -6,9 +6,9 @@ import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
 public class ImplRankingDoc extends SearchRankingDoc {
 	
 	private Index index;
-	private ImplRankedDoc doc;
+	private ImplRanked doc;
 	
-	public ImplRankingDoc (Index index, ImplRankedDoc doc) {
+	public ImplRankingDoc (Index index, ImplRanked doc) {
 		
 		this.index = index;
 		this.doc = doc;
@@ -19,7 +19,7 @@ public class ImplRankingDoc extends SearchRankingDoc {
 	}
 	
 	public String getPath () {
-		return this.index.getDocPath (this.doc.getDocID());
+		return this.index.getDocPath (this.doc.getId());
 	}
 	
 }
