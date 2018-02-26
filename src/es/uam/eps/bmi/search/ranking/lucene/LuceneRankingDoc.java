@@ -13,9 +13,9 @@ public class LuceneRankingDoc extends SearchRankingDoc {
     Index index;
     ScoreDoc rankedDoc;
     
-    LuceneRankingDoc (Index idx, ScoreDoc r) {
-        index = idx;
-        rankedDoc = r;
+    public LuceneRankingDoc (Index index, ScoreDoc scoredoc) {
+        this.index = index;
+        this.rankedDoc = scoredoc;
     }
     public double getScore() {
         return rankedDoc.score;

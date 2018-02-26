@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Alain/Desktop/src/BMINF-p1/libs/analysis/kuromoji/lucene-analyzers-kuromoji-7.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alain/Desktop/src/BMINF-p1/libs/classification/lucene-classification-7.2.1.jar"/>

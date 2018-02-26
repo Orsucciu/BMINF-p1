@@ -1,5 +1,12 @@
 package es.uam.eps.bmi.search.vsm;
 
+import java.util.ArrayList;
+
+import es.uam.eps.bmi.search.AbstractEngine;
+import es.uam.eps.bmi.search.index.lucene.LuceneIndex;
+import es.uam.eps.bmi.search.ranking.SearchRanking;
+import es.uam.eps.bmi.search.ranking.impl.ImplRanking;
+
 public class VSMEngine extends AbstractEngine {
 	
 	private LuceneIndex index;
@@ -25,7 +32,7 @@ public class VSMEngine extends AbstractEngine {
 			if (matches.size() >= quantity) break;
 		}
 		
-		return new ImplRanking (index, matches);
+		return (SearchRanking) new ImplRanking (index, matches);
 	}
 	
 }
