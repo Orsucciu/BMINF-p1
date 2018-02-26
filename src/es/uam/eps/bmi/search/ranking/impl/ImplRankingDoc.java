@@ -8,13 +8,13 @@ public class ImplRankingDoc extends SearchRankingDoc {
 	private Index index;
 	private ImplRankedDoc doc;
 	
-	public ImplRankingDoc (Index i, ImplRankedDoc d) {
+	public ImplRankingDoc (Index index, ImplRankedDoc doc) {
 		
-		this.index = i;
-		this.doc = d;
+		this.index = index;
+		this.doc = doc;
 	}
 	
-	public float getScore () {
+	public double getScore () {
 		return this.doc.getScore();
 	}
 	

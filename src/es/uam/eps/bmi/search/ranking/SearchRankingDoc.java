@@ -9,6 +9,9 @@ public class SearchRankingDoc implements Comparable<SearchRankingDoc> {
 	private ScoreDoc scoredoc;
 	private String path;
 	
+	public SearchRankingDoc() {
+	}
+	
 	public SearchRankingDoc (ScoreDoc scoredoc, String path) {
 		this.scoredoc = scoredoc;
 		this.path = path;

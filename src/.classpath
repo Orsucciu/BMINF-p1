@@ -11,14 +11,5 @@
 	<classpathentry kind="lib" path="C:/Users/Alain/Desktop/src/BMINF-p1/libs/queryparser/lucene-queryparser-7.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alain/Desktop/src/BMINF-p1/libs/replicator/lucene-replicator-7.2.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alain/Desktop/src/BMINF-p1/libs/suggest/lucene-suggest-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-analyzers-kuromoji-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-classification-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-core-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-memory-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-misc-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-queries-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-queryparser-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-replicator-7.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maxime/Documents/GitHub/BMINF-p1/jars/lucene-suggest-7.2.1.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

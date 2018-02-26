@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
@@ -19,7 +20,7 @@ public class LuceneEngine extends AbstractEngine{
 	private IndexSearcher indexSearcher;
 
 	public LuceneEngine(String indexPath) throws IOException {
-		super(indexPath);
+		super(new LuceneIndex(indexPath));
 	}
 
 	@Override
@@ -35,8 +36,6 @@ public class LuceneEngine extends AbstractEngine{
 		}
 
 		BooleanQuery pQuery = builder.build();
-
-		// realizamos la busqueda
 		TopDocs top = this.indexSearcher.search(pQuery, cutoff);
 
 		return new LuceneRanking((LuceneIndex) index, top.scoreDocs);

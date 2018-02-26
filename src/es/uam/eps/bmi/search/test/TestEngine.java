@@ -53,7 +53,7 @@ public class TestEngine {
             public int compare(String t1, String t2) {
                 try {
                     return (int) Math.signum(index.getTotalFreq(t2)- index.getTotalFreq(t1));
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                     return 0;
                 }

@@ -1,5 +1,7 @@
 package es.uam.eps.bmi.search.ui;
 
+import java.io.IOException;
+
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
 
 public class TextResultDocRenderer extends ResultsRenderer {
@@ -12,7 +14,13 @@ public class TextResultDocRenderer extends ResultsRenderer {
 	
 	@Override
 	public String toString() {
-		return String.valueOf(srdoc.getScore()) + " - " + srdoc.getPath();
+		try {
+			return String.valueOf(srdoc.getScore()) + " - " + srdoc.getPath();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

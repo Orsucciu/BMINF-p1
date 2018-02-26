@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import es.uam.eps.bmi.search.AbstractEngine;
+import es.uam.eps.bmi.search.index.Index;
 import es.uam.eps.bmi.search.index.lucene.LuceneIndex;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.impl.ImplRankedDoc;
@@ -17,8 +18,8 @@ public class VSMEngine extends AbstractEngine {
 	
 	private LuceneIndex index;
 	
-	public VSMEngine (String path) throws IOException{
-		super (path);
+	public VSMEngine (LuceneIndex lucIndex) throws IOException{
+		super (lucIndex);
 	}
 	
 	@Override
@@ -48,8 +49,8 @@ public class VSMEngine extends AbstractEngine {
 			double sum = 0;
 			for (int j = 0; j < components.length; j++) {
 
-				double tf = CosineSimilarity.termFrequency(this.index, components[j], i);
-				double idf = CosineSimilarity.inverseDocumentFrequency(this.index, components[j]);
+				double tf = tF(this.index, components[j], i);
+				double idf = iDF(this.index, components[j]);
 
 				sum += (tf * idf);
 			}
@@ -83,9 +84,26 @@ public class VSMEngine extends AbstractEngine {
 
 	}
 
-	@Override
 	public void loadIndex(String path) throws IOException {
 		this.index = new LuceneIndex(path);
 	}
+	
+	public double tF(LuceneIndex index, String term, int docID) throws IOException {
+
+		long frec = index.getTermFreq(term, docID);
+		if (frec <= 0)
+			return 0;
+
+		return 1 + (Math.log(frec) / Math.log(2));
+	}
+
+
+	public double iDF(LuceneIndex index, String term) throws IOException {
+
+		double idf = (double) (Math.log((double) index.getIndexReader().numDocs() / (1 + index.getDocFreq(term)))
+				/ Math.log(2));
+
+		return 1 + idf;
+}
 	
 }
