@@ -1,5 +1,7 @@
 package es.uam.eps.bmi.search.ranking.impl;
 
+import es.uam.eps.bmi.search.ranking.SearchRanking;
+
 public class ImplRanking implements SearchRanking {
 	
 	private ImplRankingIterator iterator;

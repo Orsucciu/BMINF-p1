@@ -80,7 +80,7 @@ public class TestEngine {
         System.out.println("------------------------------\n");
         System.out.println("Checking search results");
 
-        testSearch (new LuceneEngine(indexPath), query, 5);
+        testSearch ((SearchEngine) new LuceneEngine(indexPath), query, 5);
         testSearch (new VSMEngine(new LuceneIndex(indexPath)), query, 5);
     }
     

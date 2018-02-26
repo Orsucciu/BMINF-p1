@@ -20,7 +20,7 @@ public interface Index {
 
 	public String getDocPath(int docID);
 
-	public String getTermFreq(String word, int docID);
+	public long getTermFreq(String word, int docID);
 
-	public String getDocFreq(String word);
+	public int getDocFreq(String word);
 }

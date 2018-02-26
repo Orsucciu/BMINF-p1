@@ -34,6 +34,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexableFieldType;
 import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.IndexSearcher;
@@ -44,6 +45,8 @@ import org.apache.lucene.store.SimpleFSDirectory;
 import es.uam.eps.bmi.search.index.Index;
 import es.uam.eps.bmi.search.index.freq.FreqVector;
 import es.uam.eps.bmi.search.index.freq.TermFreq;
+import es.uam.eps.bmi.search.index.freq.lucene.LuceneFreqVector;
+import es.uam.eps.bmi.search.index.freq.lucene.LuceneFreqVectorIterator;
 
 public class LuceneIndex implements Index {
 	//private ArrayList<IndexReader> indexReaders = new ArrayList<IndexReader>();
@@ -56,7 +59,7 @@ public class LuceneIndex implements Index {
 	 */
 	public LuceneIndex(String indexPath) throws IOException {
 		
-		this.indexreader = DirectoryReader.open(FSDirectory.open(FileSystems.getDefault().getPath(indexPath))); //read from disk
+		this.indexReader = DirectoryReader.open(FSDirectory.open(FileSystems.getDefault().getPath(indexPath))); //read from disk
 		//this.indexReaders.add(indexReader);
 	}
 	
@@ -123,9 +126,20 @@ public class LuceneIndex implements Index {
 	@Override
 	public FreqVector getDocVector(int docID) {
 		
-		FreqVector freq;
-		Terms terms = this.indexReader.getTermVector(docID, "content");
-		freq = new LuceneFreqVector(terms);
+		FreqVector freq = null;
+		Terms terms = null;
+		try {
+			terms = this.indexReader.getTermVector(docID, "content");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			freq = new LuceneFreqVector(terms);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return freq;
 	}
@@ -134,17 +148,31 @@ public class LuceneIndex implements Index {
 	//get the path of a doc
 	public String getDocPath(int docID) {
 		
-		return this.indexReader.document(docId).get("path");
+		try {
+			return this.indexReader.document(docID).get("path");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 
 	@Override
 	//get the frequency of a term
 	public long getTermFreq(String word, int docID) {
 		
-		LuceneFreqVector fvector = new LuceneFreqVector(this.indexReader.getTermVector(docID, "content"));
-		LuceneFreqVectorIterator iterator = (LuceneFreqVectorIterator) fvector.iterator();
-		
-		return iterator.getFreq(word);
+		LuceneFreqVector fvector;
+		try {
+			fvector = new LuceneFreqVector(this.indexReader.getTermVector(docID, "content"));
+			LuceneFreqVectorIterator iterator = (LuceneFreqVectorIterator) fvector.iterator();
+			
+			return iterator.getFreq(word);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
@@ -153,7 +181,13 @@ public class LuceneIndex implements Index {
 
 		Term term = new Term("content", word);
 
-		return this.indexReader.docFreq(term);
+		try {
+			return this.indexReader.docFreq(term);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 0;
+		}
 	}
 	
 	public IndexReader getIndexReader () {
