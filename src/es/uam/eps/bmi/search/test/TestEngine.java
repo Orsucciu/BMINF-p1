@@ -27,7 +27,7 @@ import java.util.List;
  */
 public class TestEngine {
     public static void main (String a[]) throws IOException {
-        testCollection ("src/es/uam/eps/bmi/search/ranking", "index/src", "size", "public abstract");
+        testCollection ("es/uam/eps/bmi/search/ranking", "index/src", "size", "public abstract");
         testCollection ("collections/docs1k.zip", "index/docs", "seat", "obama family tree");
         testCollection ("collections/urls.txt", "index/urls", "wikipedia", "information probability");
     }

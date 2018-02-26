@@ -130,11 +130,6 @@ public class LuceneIndex implements Index {
 		Terms terms = null;
 		try {
 			terms = this.indexReader.getTermVector(docID, "content");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			freq = new LuceneFreqVector(terms);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

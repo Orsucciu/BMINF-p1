@@ -17,9 +17,9 @@ public class LuceneFreqVectorIterator implements FreqVectorIterator {
     long pointer;
 
     public LuceneFreqVectorIterator(Terms t) throws IOException {
-        terms = t.iterator();
-        size = t.size();
-        pointer = 0;
+        this.terms = t.iterator();
+        this.size = t.size();
+        this.pointer = 0;
     }
     
     public boolean hasNext() {
